@@ -1,0 +1,38 @@
+[image_size]
+height = 720
+width = 1280
+
+[[attributes]]
+name = "crowd"
+type = "switch"
+tag = "c"
+
+[[categories]]
+name = "human"
+    [[categories.subcategories]]
+    name = "pedestrian"
+
+    [[categories.subcategories]]
+    name = "rider"
+
+[[categories]]
+name = "vehicle"
+   [[categories.subcategories]]
+    name = "car"
+
+   [[categories.subcategories]]
+    name = "truck"
+
+   [[categories.subcategories]]
+    name = "bus"
+
+    [[categories.subcategories]]
+    name = "train"
+
+[[categories]]
+name = "bike"
+    [[categories.subcategories]]
+    name = "motorcycle"
+
+    [[categories.subcategories]]
+    name = "bicycle"

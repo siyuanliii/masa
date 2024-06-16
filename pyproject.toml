@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "masa"
+version = "0.1.0"  # Replace with your actual version
+description = "MASA: Matching Anything By Segmenting Anything"
+readme = "README.md"
+keywords = ["instance matching", "object tracking"]
+authors = [
+    { name = "Siyuan Li", email = "siyuan.li@vision.ee.ethz.ch" },
+]
+license = {text = "Apache-2.0"}
+
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+requires-python = ">= 3.11"
+
+dependencies = [
+    "wheel",
+    "torch==2.1.2",
+    "torchvision==0.16.2",
+    "transformers==4.38.2",
+    "tokenizers",
+    "numpy",
+    "opencv-python",
+    "supervision",
+    "openmim",
+    "mmcv==2.1.0",
+    "mmengine",
+    "nltk",
+    "h5py",
+    "einops",
+    "seaboard",
+    "fairscale",
+    # Additional dependencies installed via Git are listed in the installation script
+]
+
+[tool.setuptools]
+package-dir = {"masa" = "masa"}
+include-package-data = false
+license-files = ["LICENSE"]
+zip-safe = true
+
+[tool.setuptools.packages.find]
+include = ["masa*"]
+exclude = ["docs*", "tests*", "third_party*", "assets*"]
