@@ -118,7 +118,7 @@ If you want to test our tracker on standard benchmarks, please refer to the [ben
 > See more results on our [project page](https://matchinganything.github.io/)! 
 
 ## Installation
-see [INSTALL.md](docs/install.md)
+Please refer to [INSTALL.md](docs/install.md)
 
 ## Demo Run
 
