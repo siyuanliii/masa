@@ -6,7 +6,7 @@
 
 
 [ [Project Page](https://matchinganything.github.io/) ]
-[ [ArXiv]() ]
+[ [ArXiv](https://arxiv.org/abs/2406.04221) ]
 
 [Computer Vision Lab, ETH Zurich](https://vision.ee.ethz.ch/)
 
