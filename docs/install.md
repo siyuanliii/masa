@@ -10,7 +10,7 @@ git clone https://github.com/siyuanliii/masa.git
 ## Step 2: Create and Activate the Conda Environment
 Navigate to the project directory and create a Conda environment using:
 ```bash
-conda env create -f environment.yml
+conda env create -n masaenv python==3.11
 conda activate masaenv
 ```
 ## Option 1: Automated Installation
