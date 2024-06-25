@@ -14,7 +14,7 @@ from mmdet.structures import SampleList
 from mmengine.logging import print_log
 from torch import Tensor
 
-from projects.Detic_new.detic import Detic
+from masa.projects.Detic_new.detic import Detic
 
 
 def encode_mask_results(mask_results):
