@@ -29,18 +29,24 @@ dependencies = [
     "torchvision==0.16.2",
     "transformers==4.38.2",
     "tokenizers",
-    "numpy",
+    "numpy<=1.26.4",
     "opencv-python",
     "supervision",
     "openmim",
+    "mmdet @ git+https://github.com/open-mmlab/mmdetection.git@v3.3.0",
     "mmcv==2.1.0",
     "mmengine",
     "nltk",
     "h5py",
     "einops",
-    "seaboard",
+    "seaborn",
     "fairscale",
-    # Additional dependencies installed via Git are listed in the installation script
+    "clip @ git+https://github.com/openai/CLIP.git",
+    "trackeval @ git+https://github.com/siyuanliii/TrackEval.git",
+    "teta @ git+https://github.com/SysCV/tet.git#subdirectory=teta",
+    "scalabel @ git+https://github.com/scalabel/scalabel.git@scalabel-evalAPI",
+    "tao @ git+https://github.com/TAO-Dataset/tao",
+    "lvis @ git+https://github.com/lvis-dataset/lvis-api.git",
 ]
 
 [tool.setuptools]
