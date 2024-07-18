@@ -38,7 +38,7 @@ dependencies = [
     "nltk",
     "h5py",
     "einops",
-    "seaboard",
+    "seaborn",
     "fairscale",
     # Additional dependencies installed via Git are listed in the installation script
 ]
