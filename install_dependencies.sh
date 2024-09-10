@@ -16,6 +16,7 @@ pip install git+https://github.com/open-mmlab/mmdetection.git@v3.3.0
 
 # Install various Python packages using pip
 echo "Installing various Python packages..."
+pip install numpy==1.26.4
 pip install supervision
 pip install transformers==4.38.2
 pip install nltk
@@ -23,7 +24,7 @@ pip install h5py
 pip install einops
 pip install seaborn
 pip install fairscale
-pip install git+https://github.com/openai/CLIP.git
+pip install git+https://github.com/openai/CLIP.git --no-deps
 pip install git+https://github.com/siyuanliii/TrackEval.git
 pip install git+https://github.com/SysCV/tet.git#subdirectory=teta
 pip install git+https://github.com/scalabel/scalabel.git@scalabel-evalAPI
