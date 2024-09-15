@@ -230,7 +230,7 @@ python demo/video_demo_with_text.py demo/zebra-drone.mp4 --out demo_outputs/zebr
 Here are some of the things we are working on and please let us know if you have any suggestions or requests:
 
 - [] Release the unified model with YOLO-world detector for fast open-vocabulary tracking.
-- [] Release the training code for turning your own detector to a strong tracker on unlabeled images from your domain.
+- [x] Release the training code for turning your own detector to a strong tracker on unlabeled images from your domain.
 - [x] Release the plug-and-play MASA model, compatible any detection and segmentation models.
 - [x] Release the benchmark testing on TAO and BDD100K.
 - [x] Release pre-trained unified models in the paper and the inference demo code.

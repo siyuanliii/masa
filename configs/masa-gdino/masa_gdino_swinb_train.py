@@ -1,17 +1,17 @@
 _base_ = [
-    '../../../projects/Detic_new/configs/detic_centernet2_swin-b_fpn_4x_lvis-base_in21k-lvis-masa.py',
-    '../../datasets/tao/tao_dataset_v05.py',
-    '../../default_runtime.py'
+    '../../projects/grounding_dino/grounding_dino_swin-b_pretrain_mixeddata_masa.py',
+    '../datasets/masa_dataset.py',
+    '../default_runtime.py'
 ]
 default_scope = 'mmdet'
 detector = _base_.model
 detector.pop('data_preprocessor')
 detector['init_cfg'] = dict(
     type='Pretrained',
-    checkpoint= 'saved_models/pretrain_weights/detic_centernet2_swin-b_fpn_4x_lvis-base_in21k-lvis-ec91245d.pth'
+    checkpoint= 'saved_models/pretrain_weights/groundingdino_swinb_cogcoor_mmdet-55949c9c.pth'
     # noqa: E501
 )
-detector['type'] = 'DeticMasa'
+detector['type'] = 'GroundingDINOMasa'
 
 del _base_.model
 
@@ -20,8 +20,8 @@ model = dict(
     freeze_detector=True,
     unified_backbone=True,
     load_public_dets = True,
-    benchmark='tao',
-    public_det_path = 'results/public_dets/tao_val_dets/teta_50_internms/teter_swinT_tao_val_internms_50/',
+    benchmark = 'tao',
+    public_det_path = 'results/public_dets/tao_val_dets/teta_50_internms/detic_tao_val_det/',
     data_preprocessor=dict(
         type='TrackDataPreprocessor',
         # Image normalization parameters
@@ -29,8 +29,9 @@ model = dict(
         std=[58.395, 57.12, 57.375],
         bgr_to_rgb=True,
         # Image padding parameters
-        pad_mask=True,  # In instance segmentation, the mask needs to be padded
-        pad_size_divisor=32),  # Padding the image to multiples of 32
+        pad_mask=False,  # In instance segmentation, the mask needs to be padded
+        pad_size_divisor=1024, # Padding the image to multiples of 32
+    ),
     detector=detector,
     masa_adapter=[
         dict(
@@ -129,9 +130,14 @@ model = dict(
             nms=dict(type='nms', iou_threshold=0.7),
             min_bbox_size=0),
         rcnn=dict(
-            score_thr=0.05,
-            nms=dict(type='nms', iou_threshold=0.5),
-            max_per_img=100)
+            score_thr=0.02,
+            # nms=dict(type='nms', iou_threshold=0.5),
+            nms=dict(type='nms',
+                     iou_threshold=0.5,
+                     class_agnostic=True,
+                     split_thr=100000),
+            max_per_img=50,
+            mask_thr_binary=0.5)
         # soft-nms is also supported for rcnn testing
         # e.g., nms=dict(type='soft_nms', iou_threshold=0.5, min_score=0.05)
     ),
@@ -156,19 +162,18 @@ model = dict(
                 neg_margin=0.1,
                 hard_mining=True,
                 loss_weight=1.0)),
-        # loss_bbox=dict(type='L1Loss', loss_weight=1.0),
         train_cfg=dict(
             assigner=dict(
                 type='MaxIoUAssigner',
                 pos_iou_thr=0.7,
-                neg_iou_thr=0.5,
+                neg_iou_thr=0.3,
                 min_pos_iou=0.5,
                 match_low_quality=False,
                 ignore_iof_thr=-1),
             sampler=dict(
                 type='CombinedSampler',
                 num=512,
-                pos_fraction=0.8,
+                pos_fraction=0.5,
                 neg_pos_ub=3,
                 add_gt_as_proposals=True,
                 pos_sampler=dict(type='InstanceBalancedPosSampler'),
@@ -186,14 +191,68 @@ model = dict(
         )
 )
 
-train_dataloader = None
-train_cfg = None
+test_pipeline = [
+    dict(
+        type='TransformBroadcaster',
+        transforms=[
+            dict(type='LoadImageFromFile'),
+            dict(
+                type='Resize',
+                scale=(1024, 1024),
+                keep_ratio=True),
+            dict(type='LoadTrackAnnotations')
+        ]),
+    dict(type='PackTrackInputs')
+]
+val_dataloader = dict(
+        dataset=dict(
+            ann_file='data/tao/annotations/tao_val_lvis_v1_classes.json',
+
+            pipeline=test_pipeline
+    )
+)
+test_dataloader = val_dataloader
+
+
+val_evaluator = dict(
+    type='TaoTETAMetric',
+    format_only=False,
+    ann_file='data/tao/annotations/tao_val_lvis_v1_classes.json',
+    metric=['TETA'],
+    outfile_prefix='results/masa_results/masa-groundingdino-release_detic_dets-test',
+)
+
+test_evaluator = val_evaluator
+
+
+# optimizer
+optim_wrapper = dict(
+    type='OptimWrapper',
+    optimizer=dict(type='SGD', lr=0.08, momentum=0.9, weight_decay=0.0001),
+    clip_grad=dict(max_norm=35, norm_type=2)
+)
+# learning policy
+param_scheduler = [
+    dict(
+        type='LinearLR', start_factor=0.001, by_epoch=False, begin=0, end=1000),
+    dict(
+        type='MultiStepLR',
+        begin=0,
+        end=12,
+        by_epoch=True,
+        milestones=[8, 11],
+        gamma=0.1)
+]
+# runtime settings
+train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=12, val_interval=4)
 val_cfg = dict(type='ValLoop')
 test_cfg = dict(type='TestLoop')
 
 default_hooks = dict(
     logger=dict(type='LoggerHook', interval=50),
-    visualization=dict(type='TrackVisualizationHook', draw=False))
+    visualization=dict(type='TrackVisualizationHook', draw=False),
+checkpoint = dict(type='CheckpointHook', interval=1),
+)
 
 vis_backends = [dict(type='LocalVisBackend')]
 visualizer = dict(
@@ -206,14 +265,4 @@ custom_hooks = [
     dict(type='SyncBuffersHook')
 ]
 auto_scale_lr = dict(enable=False, base_batch_size=16)
-val_dataloader = dict(
-    dataset=dict(
-        ann_file='data/tao/annotations/tao_val_lvis_v05_classes.json'
-    )
-)
-test_dataloader = val_dataloader
-val_evaluator = dict(
-    ann_file='data/tao/annotations/tao_val_lvis_v05_classes.json',
-    outfile_prefix='results/masa_results/masa-detic-release-test',
-)
-test_evaluator = val_evaluator
+

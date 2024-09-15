@@ -8,7 +8,7 @@ detector = _base_.model
 detector.pop('data_preprocessor')
 detector['init_cfg'] = dict(
     type='Pretrained',
-    checkpoint= 'saved_models/tsa_models/detic_centernet2_swin-b_fpn_4x_lvis-base_in21k-lvis-ec91245d.pth'
+    checkpoint= 'saved_models/pretrain_weights/detic_centernet2_swin-b_fpn_4x_lvis-base_in21k-lvis-ec91245d.pth'
     # noqa: E501
 )
 detector['type'] = 'DeticMasa'

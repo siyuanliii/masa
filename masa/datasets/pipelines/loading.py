@@ -6,7 +6,7 @@ from mmdet.registry import TRANSFORMS
 from mmdet.structures.bbox import get_box_type
 
 
-@TRANSFORMS.register_module()
+@TRANSFORMS.register_module(force=True)
 class LoadMatchAnnotations(LoadAnnotations):
     """Load and process the ``instances`` and ``seg_map`` annotation provided
     by dataset. It must load ``instances_ids`` which is only used in the

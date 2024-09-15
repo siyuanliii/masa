@@ -9,7 +9,7 @@ detector = _base_.model
 detector.pop('data_preprocessor')
 detector['init_cfg'] = dict(
     type='Pretrained',
-    checkpoint= 'saved_models/tsa_models/groundingdino_swinb_cogcoor_mmdet-55949c9c.pth'
+    checkpoint= 'saved_models/pretrain_weights/groundingdino_swinb_cogcoor_mmdet-55949c9c.pth'
     # noqa: E501
 )
 detector['type'] = 'GroundingDINOMasa'

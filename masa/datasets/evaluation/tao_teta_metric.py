@@ -87,7 +87,7 @@ class TaoTETAMetric(BaseVideoMetric):
     def __init__(
         self,
         metric: Union[str, List[str]] = ["TETA"],
-        outfile_prefix: Optional[str] = None,
+        outfile_prefix: Optional[str] = default_prefix,
         track_iou_thr: float = 0.5,
         format_only: bool = False,
         ann_file: Optional[str] = None,
