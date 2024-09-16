@@ -113,6 +113,9 @@ Check out our [model zoo](docs/model_zoo.md) for more detailed benchmark perform
 ## Benchmark Testing
 If you want to test our tracker on standard benchmarks, please refer to the [benchmark_test.md](docs/benchmark_test.md).
 
+## Training
+If you want to train the MASA model, please refer to the [train.md](docs/train.md).
+
 ## More results
 
 > See more results on our [project page](https://matchinganything.github.io/)! 
