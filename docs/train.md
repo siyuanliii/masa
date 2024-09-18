@@ -44,6 +44,6 @@ Here is a multiple GPU training using Grounding-Dino as example:
 
 2. Run the following command to train MASA with 8 GPUs:
 ```aiignore
-tools/dist_train.sh configs/masa-gdino/masa_gdino_train.py 8 --work-dir saved_models/masa_gdino/
+tools/dist_train.sh configs/masa-gdino/masa_gdino_swinb_train.py 8 --work-dir saved_models/masa_gdino/
 ```
 
