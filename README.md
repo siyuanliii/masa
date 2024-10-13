@@ -16,6 +16,7 @@
 </p>
 
 ## News and Updates
+- 2024.09: Update a repo [TETA](https://github.com/siyuanliii/TETA) to make evaluation on TAO TETA benchmark, Open-vocabulary MOT benchmark and BDD100K MOT and MOTS benchmarks easier!
 - 2024.06: MASA code is released!
 - 2024.04: MASA is awarded CVPR highlight!
 
@@ -112,6 +113,9 @@ Check out our [model zoo](docs/model_zoo.md) for more detailed benchmark perform
 
 ## Benchmark Testing
 If you want to test our tracker on standard benchmarks, please refer to the [benchmark_test.md](docs/benchmark_test.md).
+
+## Compare with MASA and evaluate TETA metric
+If you want to compare with MASA and evaluate your own tracker's results on TAO TETA benchmark, Open-vocabulary MOT benchmark and BDD100K MOT and MOTS benchmarks. Please refer to the [TETA repo](https://github.com/siyuanliii/TETA) for quick evaluation.
 
 ## Training
 If you want to train the MASA model, please refer to the [train.md](docs/train.md).

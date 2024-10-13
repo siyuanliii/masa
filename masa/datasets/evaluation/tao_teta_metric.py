@@ -230,7 +230,6 @@ class TaoTETAMetric(BaseVideoMetric):
 
         # Command line interface:
         default_eval_config = teta.config.get_default_eval_config()
-        # print only combined since TrackMAP is undefined for per sequence breakdowns
         default_eval_config["PRINT_ONLY_COMBINED"] = True
         default_eval_config["DISPLAY_LESS_PROGRESS"] = True
         default_eval_config["OUTPUT_TEM_RAW_DATA"] = True
