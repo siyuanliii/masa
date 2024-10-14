@@ -19,6 +19,7 @@ from mmengine.utils import track_iter_progress
 from mmdet.apis import init_detector
 from mmdet.registry import VISUALIZERS
 from mmcv.ops.nms import batched_nms
+from demo.video_frame_loader import VideoFrameReader
 
 import masa
 from masa.apis import inference_masa, init_masa, inference_detector, build_test_pipeline
@@ -108,7 +109,13 @@ def main():
         sam_model = sam_model_registry[args.sam_type](args.sam_path)
         sam_predictor = SamPredictor(sam_model.to(device))
 
-    video_reader = mmcv.VideoReader(args.video)
+    if os.path.isfile(args.video):
+        video_reader = mmcv.VideoReader(args.video)
+    elif os.path.isdir(args.video):
+        video_reader = VideoFrameReader(args.video)
+    else:
+        raise Exception('Video should be a file or directory with frames ' + args.video)
+    # video_reader = mmcv.
     video_writer = None
 
     #### parsing the text input
