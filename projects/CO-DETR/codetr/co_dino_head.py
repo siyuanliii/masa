@@ -477,7 +477,7 @@ class CoDINOHead(DINOHead):
             neg_inds = (label == bg_class_ind).nonzero().squeeze(1)
             if pos_inds.shape[0] > max_num_coords:
                 indices = torch.randperm(
-                    pos_inds.shape[0])[:max_num_coords].cuda()
+                    pos_inds.shape[0])[:max_num_coords].to(coord.device)
                 pos_inds = pos_inds[indices]
 
             coord = bbox_xyxy_to_cxcywh(coord[pos_inds] / factor)
@@ -507,7 +507,7 @@ class CoDINOHead(DINOHead):
                     attn_mask[:, coord.shape[0]:, ] = True
                 else:
                     indices = torch.randperm(
-                        neg_inds.shape[0])[:padding_shape].cuda()
+                        neg_inds.shape[0])[:padding_shape].to(coord.device)
                     neg_inds = neg_inds[indices]
                     padding_coord = bbox_xyxy_to_cxcywh(coords[i][neg_inds] /
                                                         factor)
